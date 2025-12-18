@@ -2,5 +2,15 @@ services:
   nginx:
     build: ./nginx
     restart: "always"
+    volumes:
+      - wordpress_files:/var/www/html
     ports:
       - 80:80
+  wordpress:
+    build: ./wordpress
+    restart: always
+    volumes:
+      - wordpress_files:/var/www/html
+
+volumes:
+  wordpress_files:
