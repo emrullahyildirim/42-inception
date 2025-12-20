@@ -5,12 +5,27 @@ services:
     volumes:
       - wordpress_files:/var/www/html
     ports:
-      - 80:80
+      - 443:443
   wordpress:
     build: ./wordpress
     restart: always
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
     volumes:
       - wordpress_files:/var/www/html
+  mariadb:
+    build: ./mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+    volumes:
+      - mariadb_data:/var/lib/mysql
 
 volumes:
   wordpress_files:
+  mariadb_data:
