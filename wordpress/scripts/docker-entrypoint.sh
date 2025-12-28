@@ -3,13 +3,10 @@ set -e
 
 WP_PATH="${WP_PATH:-/var/www/html}"
 
-# Ensure WordPress core exists in the expected path
 if [ ! -f "$WP_PATH/wp-settings.php" ]; then
-    echo "WordPress not found in $WP_PATH — downloading..."
     wp core download --path="$WP_PATH" --allow-root
 fi
 
-# Create wp-config.php only if it doesn't exist
 if [ ! -f "$WP_PATH/wp-config.php" ]; then
     wp config create \
         --path="$WP_PATH" \
@@ -19,6 +16,15 @@ if [ ! -f "$WP_PATH/wp-config.php" ]; then
         --dbhost="${MYSQL_HOST}" \
         --skip-check \
         --allow-root
+	wp core install \
+		--path="$WP_PATH" \
+		--url="${WORDPRESS_URL}" \
+		--title="${WORDPRESS_TITLE}" \
+		--admin_user="${WORDPRESS_ADMIN_USER}" \
+		--admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
+		--admin_email="${WORDPRESS_ADMIN_EMAIL}" \
+		--skip-email \
+		--allow-root
 fi
 
 exec "$@"

@@ -1,6 +1,6 @@
 FROM alpine:3.20
 
-RUN apk add mariadb
+RUN apk add mariadb mariadb-client
 RUN mkdir -p /var/lib/mysql /run/mysqld && chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
 COPY configs/my.cnf /etc/my.cnf

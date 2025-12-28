@@ -2,6 +2,9 @@ services:
   nginx:
     build: ./nginx
     restart: "always"
+    depends_on:
+      wordpress:
+        condition: service_healthy
     volumes:
       - wordpress_files:/var/www/html
     ports:
@@ -9,11 +12,24 @@ services:
   wordpress:
     build: ./wordpress
     restart: always
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "php-fpm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       MYSQL_HOST: mariadb
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wpuser
       MYSQL_PASSWORD: wppass
+      WORDPRESS_URL: https://emyildir.42.fr
+      WORDPRESS_TITLE: "My WordPress Site"
+      WORDPRESS_ADMIN_USER: admin
+      WORDPRESS_ADMIN_PASSWORD: adminpass
+      WORDPRESS_ADMIN_EMAIL:  admin@admin.com
     volumes:
       - wordpress_files:/var/www/html
   mariadb:
@@ -23,6 +39,11 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wpuser
       MYSQL_PASSWORD: wppass
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - mariadb_data:/var/lib/mysql
 
