@@ -1,4 +1,4 @@
-FROM alpine:3.20
+FROM alpine:3.22
 
 RUN apk add \
     php82 php82-fpm php82-opcache php82-gd php82-mysqli php82-zlib \

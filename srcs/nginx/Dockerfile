@@ -1,7 +1,7 @@
-FROM alpine:3.20
+FROM alpine:3.22
 
 RUN apk update
-RUN apk add nginx=1.26.3-r0 openssl=3.3.5-r0
+RUN apk add nginx=1.28.0-r3 openssl=3.5.4-r0
 
 RUN mkdir -p /etc/nginx/ssl
 

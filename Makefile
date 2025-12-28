@@ -1,8 +1,10 @@
-up:
-	docker compose up -d --build
+DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
 
-restart:
-	docker compose up -V -d
+up:	
+	docker compose -f $(DOCKER_COMPOSE_PATH) up -d --build
 
-down:
-	docker compose down -v
+restart:	
+	docker compose -f $(DOCKER_COMPOSE_PATH) up -V -d
+	
+down:	
+	docker compose -f $(DOCKER_COMPOSE_PATH) down -v
