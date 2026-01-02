@@ -1,7 +1,7 @@
 services:
   nginx:
     build: ./nginx
-    restart: "always"
+    restart: always
     depends_on:
       wordpress:
         condition: service_healthy
@@ -46,7 +46,17 @@ services:
 
 volumes:
   wordpress_files:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/emyildir/data/wordpress'
   mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/emyildir/data/mariadb'
 
 networks:
   default: 
