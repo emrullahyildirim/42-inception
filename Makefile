@@ -1,8 +1,8 @@
 DOCKER_COMPOSE_PATH = ./srcs/docker-compose.yml
 
-all: up
+all: run
 
-up: 
+run: 
 	mkdir -p /home/emyildir/data/wordpress
 	mkdir -p /home/emyildir/data/mariadb
 	docker compose -f $(DOCKER_COMPOSE_PATH) up -d --build
@@ -10,12 +10,20 @@ up:
 stop:
 	docker compose -f $(DOCKER_COMPOSE_PATH) stop
 
-down:
-	docker compose -f $(DOCKER_COMPOSE_PATH) down
+start:
+	docker compose -f $(DOCKER_COMPOSE_PATH) start
+
+status:
+	@docker ps --format "table {{.Names}}\t{{.Status}}"
 
 clean:
-	docker compose -f $(DOCKER_COMPOSE_PATH) down -v
-	rm -rf /home/emyildir/data/wordpress
-	rm -rf /home/emyildir/data/mariadb
+	docker compose -f $(DOCKER_COMPOSE_PATH) down
 
-re: clean up
+fclean:
+	docker compose -f $(DOCKER_COMPOSE_PATH) down -v
+	sudo rm -rf /home/emyildir/data/wordpress
+	sudo rm -rf /home/emyildir/data/mariadb
+
+re: fclean run
+
+.PHONY: all run stop start status clean fclean re
