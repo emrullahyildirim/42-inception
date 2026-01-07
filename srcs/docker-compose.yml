@@ -9,6 +9,8 @@ services:
       - wordpress_files:/var/www/html
     ports:
       - 443:443
+    networks:
+      - default
   wordpress:
     build: ./wordpress
     restart: always
@@ -28,6 +30,8 @@ services:
       - wp_admin_password
       - wp_user_password
       - db_user_password
+    networks:
+      - default
   mariadb:
     build: ./mariadb
     restart: always
@@ -43,6 +47,8 @@ services:
     secrets:
       - db_root_password
       - db_user_password
+    networks:
+      - default
 
 volumes:
   wordpress_files:
@@ -60,6 +66,7 @@ volumes:
 
 networks:
   default: 
+    driver: bridge
 
 secrets:
   wp_admin_password:
