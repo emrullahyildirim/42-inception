@@ -54,9 +54,9 @@ __AI USAGE__
 
 Google Gemini was used while developing this project. The main purpose of using it was debugging. It was also used to get fast answers to questions related to Docker and Docker Compose fundamentals, rather than searching for them in the documentation.
 
-About the codebase the initial structures of the Docker Compose file and Dockerfiles were written by me, but I used AI to analyze and remove unnecessary structures (Such as keywords that has default values which is working for me while defining Docker services, networks, and volumes).
+About the codebase the initial structures of the Docker Compose file and Dockerfiles were written by me, but I used AI to analyze for better approach.
 
-I also used it while writing these documentation files to ensure they were properly translated into English.
+I also used it while writing these documentation files to ensure they were properly translated into English except Project Description part.
 
 
 ## Project description
